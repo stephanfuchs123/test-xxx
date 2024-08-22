@@ -35,5 +35,8 @@
     "main.202ed7df.js.map": "/test-xxx/static/js/main.202ed7df.js.map",
     "453.9c034302.chunk.js.map": "/static/js/453.9c034302.chunk.js.map"
   },
-  "entrypoints": ["test-xxx/static/css/main.236845d4.css", "test-xxx/static/js/main.202ed7df.js"]
+  "entrypoints": [
+    "test-xxx/static/css/main.236845d4.css",
+    "test-xxx/static/js/main.202ed7df.js"
+  ]
 }
