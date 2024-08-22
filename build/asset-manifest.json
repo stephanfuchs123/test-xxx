@@ -33,7 +33,7 @@
     "index.html": "/index.html",
     "main.236845d4.css.map": "/test-xxx/static/css/main.236845d4.css.map",
     "main.202ed7df.js.map": "/test-xxx/static/js/main.202ed7df.js.map",
-    "453.9c034302.chunk.js.map": "/static/js/453.9c034302.chunk.js.map"
+    "453.9c034302.chunk.js.map": "/test-xxx/static/js/453.9c034302.chunk.js.map"
   },
-  "entrypoints": ["static/css/main.236845d4.css", "static/js/main.202ed7df.js"]
+  "entrypoints": ["test-xxx/static/css/main.236845d4.css", "test-xxx/static/js/main.202ed7df.js"]
 }
