@@ -1,0 +1,31 @@
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* Ensure it aligns to the right within its container */
+  width: 160px; /* Ensure the container has a fixed width */
+}
+
+.search-icon {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.search-input {
+  width: 0;
+  padding: 10px 0 0 0 !important;
+  border-radius: 20px;
+  outline: none;
+  transition: width 0.3s ease, padding 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+  border: none;
+  background: none;
+}
+
+.search-input.active {
+  width: 136px;
+  background: none;
+  border: none;
+  border-bottom: 1px solid rgb(255, 0, 225) !important;
+  opacity: 1;
+  cursor: inherit !important;
+}

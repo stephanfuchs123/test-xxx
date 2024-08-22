@@ -1,0 +1,55 @@
+/*------------- Variable ------------*/
+
+:root {
+  --iq-primary: #ff00ff;     
+  --iq-primary-hover: #cc00cc; 
+  --iq-light-primary: #9400d3; 
+  --iq-secondary: #32cd32;     
+  --iq-white: #ffffff;         
+  --iq-black: #2e004f;         
+  --iq-title-text: #00bfff;    
+  --iq-body-text: #ffd9fe;     
+  --iq-body-bg: #120022;       
+  --iq-bg1: #1d0133;           
+  --iq-body-border: #ff1493;  
+  --iq-gold: #ffdf00;          
+  --iq-form-gradient-color: rgba(255, 0, 255, 0);
+  --iq-to-gradient-color: rgba(50, 205, 50, 0.3); 
+
+
+  
+
+   /* --iq-primary: #00ff00;       Bright neon green
+   --iq-primary-hover: #00cc00; Slightly darker neon green for hover states
+   --iq-light-primary: #7d3cff; Vibrant neon purple
+   --iq-secondary: #b2ff66;     Light neon green
+   --iq-white: #ffffff;         White remains unchanged
+   --iq-black: #300040;         Deep purple, almost black
+   --iq-title-text: #7d3cff;    Vibrant neon purple for title text
+   --iq-body-text: #ffffff;     White for body text to provide high contrast
+   --iq-body-bg: #1b0033;       Very dark purple as background color
+   --iq-bg1: #240046;           A slightly different dark purple for variety in backgrounds
+   --iq-body-border: #00ff00;   Bright neon green for borders
+   --iq-gold: #00ff00;          Bright neon green, used here instead of a gold color
+   --iq-form-gradient-color: rgba(0, 255, 0, 0); Transparent neon green
+   --iq-to-gradient-color: rgba(125, 60, 255, 0.3); Translucent neon purple
+   
+    */
+  }
+
+
+  /* 
+  Malachite green (#31EC56), razzmatazz (#EF036C), heliotrope (#EE72F8)
+
+  Cavern Pink (#E1B0AC), light pink (#F2D4D6), navy blue (#213F99)
+
+  Deep blue (#001233), light coral red (#FF595A), beige (#CAC0B3)
+
+#010101 #5f43b2 #fefdfd #b1aebb #3a3153
+
+
+#f8e602  (248,230,2)
+#4bff21  (75,255,33)
+#00f0ff  (0,240,255)
+#f4d5fd  (244,213,253)
+#772289  (119,34,137) */

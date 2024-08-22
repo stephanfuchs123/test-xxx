@@ -1,0 +1,73 @@
+.episodes-container {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .episodes-title {
+    font-size: 1.5rem;
+    color: #9818cf;
+  }
+  
+  .list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    background-color: transparent !important;
+    border: none;
+  }
+  
+  .episode-title {
+    font-size: 1rem;
+    color: white;
+  }
+  
+  .btn-link {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .btn-link:hover {
+    color: #0056b3;
+  }
+  
+  .list-group hr {
+    width: 100% !important;
+    margin: 0;
+    border: 0.5px solid #dee2e6;
+  }
+  
+  /* Custom Dropdown Styles */
+  .dropdown-toggle {
+    background-color: #9818cf !important;
+    border: none !important;
+    color: white !important;
+    padding: 10px 20px !important;
+    font-size: 1rem;
+    border-radius: 5px !important;
+    transition: background-color 0.3s ease !important;
+  }
+  
+  .dropdown-toggle:hover {
+    background-color: #700fad !important;
+  }
+  
+  .dropdown-menu {
+    background-color: #f8f9fa !important;
+    border-radius: 8px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+    min-width: 7.5rem !important;
+  }
+  
+  .dropdown-item {
+    padding: 10px 20px !important;
+    font-size: 1rem !important;
+    color: #343a40 !important;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #e2e6ea !important;
+    color: #343a40 !important;
+  }
+  

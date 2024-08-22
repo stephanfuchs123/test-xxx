@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "name": "Sand Dust",
+        "length": "2h 30m",
+        "posterImage": "fav1.jpg",
+        "ageRating": "13+",
+        "link": "https://example.com",
+        "likes": 19
+    },
+    {
+        "id": 2,
+        "name": "Last Race",
+        "length": "2 Seasons",
+        "posterImage": "fav2.jpg",
+        "ageRating": "7+",
+        "link": "https://example.com",
+        "likes": 22
+    }
+]
+
+

@@ -1,0 +1,199 @@
+.serached-card {
+    overflow: visible;
+    /* height: 27rem; */
+    margin-bottom: 0;
+    border-radius: 20px;
+    /* background-color: #b748ff2b; */
+    position: relative; /* Add relative positioning */
+  }
+  
+  /* Adjustments for mobile devices */
+  @media (max-width: 768px) {
+  
+  
+  
+    .favorites-slider {
+      height: 30rem !important;
+      margin-bottom: 2rem !important;
+    }
+  
+    .favorites-slider .swiper-slide {
+      width: 200px !important;
+      flex-shrink: 0;
+    }
+  
+    .slide-item:hover .block-images1 {
+      transform: scale(1.6) !important;
+      z-index: 999999999999999999999999999 !important; /* Ensure a high z-index */
+    }
+  }
+  
+  .favorites-slider .swiper-slide {
+    width: auto;
+    flex-shrink: 0;
+  }
+  
+  .slide-item {
+    position: relative; /* Ensure the slide item is positioned */
+  }
+  
+  .slide-item .block-images1 {
+    transition: transform 0.2s ease-in-out !important;
+    z-index: 1;
+  }
+  
+  .slide-item:hover .block-images1 {
+    transform: scale(1.6) !important;
+    z-index: 99999999999999999999999999 !important;/* Ensure a high z-index */
+    transition-delay: 0.3s !important;
+  }
+  
+  .slide-item .block-description .movie-details {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .slide-item:hover .block-description .movie-details {
+    display: block;
+    opacity: 1;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    transition-delay: 1s !important;
+  }
+  
+  .block-images1 {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .block-images1 .img-box {
+    overflow: hidden;
+  }
+  
+  .movie-details {
+    height: 50%;
+    display: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px;
+    box-sizing: border-box;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .block-images1 .movie-details {
+    display: none;
+    opacity: 0;
+    padding-top: 1.3rem;
+    transition: opacity 2.3s ease;
+    transition-delay: 0.5s !important;
+    background-color: rgb(45, 15, 57);
+  }
+  
+  .block-images1:hover .movie-details {
+    display: block;
+    opacity: 1;
+  }
+  
+  .slide-item .block-images1 .img-box img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .slide-item .block-images1 .block-description {
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .slide-item:hover .block-images1 .block-description {
+    opacity: 1;
+    transition-delay: 1s !important;
+  }
+  
+  .slide-item .block-images1:hover .block-description .movie-details {
+    opacity: 1;
+    display: block;
+  }
+  
+  .movie-details p {
+    font-size: 0.7rem;
+  }
+  
+  .block-social-info {
+    display: flex !important;
+    justify-content: space-between !important;
+    width: 75% !important;
+  }
+  
+  .text-body {
+    font-size: 0.6rem;
+  }
+  
+  .movie-details .movie-meta .genres {
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .movie-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .movieTitle {
+    font-size: 0.75rem;
+    font-weight: bold;
+    line-height: 0.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .movie-meta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .genres {
+    margin-bottom: 10px;
+  }
+  
+  .bottom-meta {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+    margin-top: 5px;
+  }
+  
+  .imdb {
+    text-align: right;
+    background-color: #f5c518;
+    color: black;
+    padding: 0.2rem 0.2rem;
+    font-size: 0.5rem;
+    font-weight: 500;
+  }
+  .year {
+    text-align: left;
+  }
+  .imdb-slide {
+    font-size: 10px !important;
+  }
+

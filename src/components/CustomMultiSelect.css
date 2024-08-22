@@ -1,0 +1,101 @@
+.custom-multi-select-container-renamed {
+  position: relative;
+  width: 100%; /* Ensure the container takes full width */
+}
+
+.custom-filter-button-renamed {
+  background-color: #ff69b4; /* Pink button */
+  border: none;
+  color: #fff; /* White text */
+  border-radius: 8px;
+  padding: 8px 15px;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  width: 100%; /* Match container width */
+}
+
+.custom-filter-button-renamed:hover {
+  background-color: #ff85c1; /* Lighter pink on hover */
+  transform: scale(1.05);
+}
+
+.custom-dropdown-renamed {
+  position: absolute;
+  top: 100%; /* Position below the button */
+  left: 0;
+  width: 100%; /* Match the button width */
+  z-index: 1050; /* High z-index to ensure it's on top of other components */
+  background-color: #3b004a; /* Slightly lighter dark purple */
+  border: 1px solid #6a006d; /* Pink border */
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  display: none; /* Initially hidden */
+}
+
+.custom-dropdown-renamed.show {
+  display: block; /* Show when active */
+}
+
+.custom-search-input-renamed {
+  background-color: #4c0057; /* Even lighter dark purple */
+  border: 1px solid #ff69b4; /* Bright pink border */
+  color: #fff; /* White text */
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.custom-search-input-renamed:focus {
+  background-color: #5e0069; /* Lighter dark purple on focus */
+  border-color: #ff85c1; /* Lighter pink border on focus */
+}
+
+.custom-dropdown-options-renamed {
+  max-height: 200px; /* Adjust height as needed */
+  overflow-y: auto;
+  padding-right: 10px; /* Padding for scrollbar space */
+}
+
+.custom-option-renamed {
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.custom-option-renamed:hover {
+  background-color: #5e0069; /* Lighter dark purple on hover */
+}
+
+.custom-option-renamed.selected {
+  background-color: #ff69b4; /* Pink background for selected option */
+  color: #fff; /* White text for better contrast */
+}
+
+.custom-dropdown-footer-renamed {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid #6a006d; /* Pink border */
+}
+
+.clear-all-btn-renamed,
+.done-btn-renamed {
+  background-color: #ff69b4; /* Pink button */
+  border: none;
+  color: #fff; /* White text */
+  border-radius: 8px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.clear-all-btn-renamed:hover,
+.done-btn-renamed:hover {
+  background-color: #ff85c1; /* Lighter pink on hover */
+  transform: scale(1.05);
+}
