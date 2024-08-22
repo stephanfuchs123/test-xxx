@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/streamit/frontend/react/build/static/css/main.e35bbf46.css",
-    "main.js": "/streamit/frontend/react/build/static/js/main.099306c0.js",
+    "main.css": "/streamit/frontend/react/build/static/css/main.ae55dc31.css",
+    "main.js": "/streamit/frontend/react/build/static/js/main.c52b81d3.js",
     "static/js/453.9c034302.chunk.js": "/streamit/frontend/react/build/static/js/453.9c034302.chunk.js",
     "static/media/sample-video.mp4": "/streamit/frontend/react/build/static/media/sample-video.76d4544731f4d8dc3952.mp4",
     "static/media/trailer.mp4": "/streamit/frontend/react/build/static/media/trailer.4f0c5b3215a42edf5e27.mp4",
@@ -31,12 +31,12 @@
     "static/media/09.jpg": "/streamit/frontend/react/build/static/media/09.190ad8a6d9b9a440f0cf.jpg",
     "static/media/10.jpg": "/streamit/frontend/react/build/static/media/10.190ad8a6d9b9a440f0cf.jpg",
     "index.html": "/streamit/frontend/react/build/index.html",
-    "main.e35bbf46.css.map": "/streamit/frontend/react/build/static/css/main.e35bbf46.css.map",
-    "main.099306c0.js.map": "/streamit/frontend/react/build/static/js/main.099306c0.js.map",
+    "main.ae55dc31.css.map": "/streamit/frontend/react/build/static/css/main.ae55dc31.css.map",
+    "main.c52b81d3.js.map": "/streamit/frontend/react/build/static/js/main.c52b81d3.js.map",
     "453.9c034302.chunk.js.map": "/streamit/frontend/react/build/static/js/453.9c034302.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e35bbf46.css",
-    "static/js/main.099306c0.js"
+    "static/css/main.ae55dc31.css",
+    "static/js/main.c52b81d3.js"
   ]
 }
