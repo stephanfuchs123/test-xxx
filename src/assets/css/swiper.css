@@ -321,7 +321,7 @@
     text-align: center; 
     opacity: 1; 
     font-size: 0;
-    z-index: 9;
+    z-index: 1;
     background: rgba(0, 0, 0, 0.5); 
     margin: 0;
     left: 15px; 
