@@ -1,27 +1,8 @@
-import React, { useRef, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { Container, Row, Col } from "react-bootstrap";
-import ReactPlayer from "react-player/lazy";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import "./VideoPlayer.css";
-import VideoPlayer from "./VideoPlayer";
 
-// import { VideoPlayer, VideoPlayerProps } from "@graphland/react-video-player";
-
-//img
-// import episode1 from "../../../assets/images/episodes/01.jpg";
-// import episode2 from "../../../assets/images/episodes/02.jpg";
-// import episode3 from "../../../assets/images/episodes/03.jpg";
-// import episode4 from "../../../assets/images/episodes/04.jpg";
-// import episode5 from "../../../assets/images/episodes/05.jpg";
-// import episode6 from "../../../assets/images/episodes/06.jpg";
-// import episode7 from "../../../assets/images/episodes/07.jpg";
-// import episode8 from "../../../assets/images/episodes/08.jpg";
-// import episode9 from "../../../assets/images/episodes/09.jpg";
-// import episode10 from "../../../assets/images/episodes/10.jpg";
-// import video from "../../../assets/video/sample-video.mp4";
-// import { data } from "jquery";
 
 const ShowList = (video) => {
    const location = useLocation();
