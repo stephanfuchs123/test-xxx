@@ -10,7 +10,7 @@
   color: var(--iq-white);
   cursor: pointer;
   left: 20px;
-  position: absolute;
+  position: absolute !important;
   transform: perspective(1px) translateZ(0);
   transition: color .3s ease;
   vertical-align: middle;
