@@ -1,15 +1,18 @@
 .data-play {
-  position: absolute;
+  padding: 9px 30px;
+  border-radius: 10px !important;
   cursor: pointer;
-  left: 20px;
-  bottom: 10px;
   background: var(--iq-primary-hover);
   border: 1px solid var(--iq-primary-hover);
   border-radius: 5px;
+  bottom: 10px;
   box-shadow: 0 0 1px #0000;
   color: var(--iq-white);
+  cursor: pointer;
+  left: 20px;
+  position: absolute;
   transform: perspective(1px) translateZ(0);
-  transition: color 0.3s ease;
+  transition: color .3s ease;
   vertical-align: middle;
 }
 
