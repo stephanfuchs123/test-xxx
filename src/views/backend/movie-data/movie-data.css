@@ -1,8 +1,16 @@
 .data-play {
   position: absolute;
-  display: flex;
+  cursor: pointer;
   left: 20px;
-  bottom: 4.5rem;
+  bottom: 10px;
+  background: var(--iq-primary-hover);
+  border: 1px solid var(--iq-primary-hover);
+  border-radius: 5px;
+  box-shadow: 0 0 1px #0000;
+  color: var(--iq-white);
+  transform: perspective(1px) translateZ(0);
+  transition: color 0.3s ease;
+  vertical-align: middle;
 }
 
 .movie-card-overlay {
@@ -195,7 +203,7 @@ hr {
   margin-top: 2rem;
 }
 
-.coming_soon{
+.coming_soon {
   height: 15rem;
   font-size: 100%;
   /* padding: 1rem; */
@@ -205,13 +213,11 @@ hr {
   background-color: #00000070;
 }
 
-
 @media (max-width: 900px) {
-  .alpha{
+  .alpha {
     width: 90%;
   }
 }
-
 
 .trailer-not-found {
   display: flex;
