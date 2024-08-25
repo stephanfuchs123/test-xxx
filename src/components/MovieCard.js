@@ -4,11 +4,9 @@ import "./movieCard.css";
 import { SwiperSlide } from "swiper/react";
 import VideoPlayer from "../views/backend/pages/player";
 
-const MovieCard = ({ movie, onClick, onPlay, type }) => {
+const MovieCard = ({ movie, type }) => {
   const parseStringToArray = (str) => {
-    if (!str) {
-      return [];
-    }
+    if (!str) return [];
     const genres = str
       .slice(1, -1)
       .split(",")
@@ -24,22 +22,21 @@ const MovieCard = ({ movie, onClick, onPlay, type }) => {
 
   const fetchMovieDataById = useCallback(
     async (id) => {
+      let isMounted = true;
       try {
-        console.log(type)
         const adjustedType = type === "movies" ? "movie" : "series";
-        console.log(adjustedType)
-
         const response = await fetch(
           `https://dashboard.ucqire.com/api/by-id-${adjustedType}?id=${id}`
         );
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error(`Failed to fetch movie data: ${response.statusText}`);
         }
         const data = await response.json();
-        return data[0];
+        if (isMounted) return data[0];
       } catch (error) {
-        console.error("Error fetching movie data:", error);
-        return null;
+        console.error("Error fetching movie data:", error.message);
+      } finally {
+        isMounted = false;
       }
     },
     [type]
@@ -47,18 +44,20 @@ const MovieCard = ({ movie, onClick, onPlay, type }) => {
 
   const handleMovieClick = useCallback(
     async (movie) => {
+      if (selectedMovie?.id === movie.id) return;
       setSelectedMovie(movie);
       const data = await fetchMovieDataById(movie.id);
       if (data) {
         setMovieData(data);
       }
     },
-    [fetchMovieDataById]
+    [fetchMovieDataById, selectedMovie]
   );
 
   const handleCloseMovieData = useCallback(() => {
     setSelectedMovie(null);
     setMovieData(null);
+    setIsPlaying(false)
   }, []);
 
   const handlePlayButtonClick = useCallback(
@@ -92,7 +91,7 @@ const MovieCard = ({ movie, onClick, onPlay, type }) => {
             <img
               src={movie.poster}
               className="img-fluid"
-              alt={movie.title_eng}
+              alt={movie.title_eng || "Movie Poster"}
             />
           </div>
           <div className="block-social-info">
@@ -112,7 +111,6 @@ const MovieCard = ({ movie, onClick, onPlay, type }) => {
             </ul>
           </div>
           <div className="movie-details">
-            {/* <span className="movieTitle">{movie.title_eng}</span> */}
             <div className="movie-meta">
               <div className="text-primary title genres">
                 <span className="text-body">

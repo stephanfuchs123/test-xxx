@@ -71,7 +71,12 @@ const MovieData = ({ movie, onClose, onPlay, url }) => {
               <button className="mute-button" onClick={toggleMute} aria-label={isMuted ? "Unmute" : "Mute"}>
                 <i className={`fas ${isMuted ? "fa-volume-mute" : "fa-volume-up"}`}></i>
               </button>
-              <button
+              
+            </>
+          ) : (
+            <div className="trailer-not-found">Trailer was not found</div>
+          )}
+          <button
                 onClick={handlePlayClick}
                 className="btn btn-hover iq-button data-play"
                 aria-label="Play"
@@ -79,10 +84,6 @@ const MovieData = ({ movie, onClose, onPlay, url }) => {
                 <i className="fa fa-play mr-2" aria-hidden="true"></i>
                 Play Now
               </button>
-            </>
-          ) : (
-            <div className="trailer-not-found">Trailer was not found</div>
-          )}
         </div>
         <div className="movie-content">
           <h1 className="movie-title">{movie.title_eng}</h1>
@@ -131,7 +132,6 @@ const MovieData = ({ movie, onClose, onPlay, url }) => {
           <div className="coming_soon">
             <p>ფუნქცია მალე დაემატება</p>
           </div>
-          {/* <Slide data={similarMovies} slidesPerView={4} /> */}
         </div>
       </div>
     </div>

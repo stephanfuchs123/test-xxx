@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Link } from "react-router-dom";
+import "../movie/mini-carousel.css"
 import { Container } from "react-bootstrap";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import Sliders from "./serials-sliders";
 import FilteredMovies from "../movie/filtered-movies";
 import GenreFilter from "../../../components/FilterForm";
+import VideoPlayer from "../pages/player";
 
 const CategoryList = () => {
   const [filters, setFilters] = useState({
@@ -14,6 +15,8 @@ const CategoryList = () => {
   const [filteredData, setFilteredData] = useState(null);
   const [genres, setGenres] = useState([]);
   const [movies, setMovies] = useState([]);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [videoUrl, setVideoUrl] = useState("");
 
   const fetchFilteredData = useCallback((genre) => {
     const apiUrl = `https://dashboard.ucqire.com/api/filter-series?janri=${genre}`;
@@ -61,25 +64,67 @@ const CategoryList = () => {
     }
   };
 
-  const fetchMovies = async () => {
+  const fetchMovies = async (id) => {
     try {
       const response = await fetch(
         "https://dashboard.ucqire.com/api/movie-carousel"
       );
+
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }
       const data = await response.json();
+      console.log(data);
       setMovies(data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
+
+
   const handleFilterChange = (selectedGenre) => {
     console.log("Selected genre:", selectedGenre);
     setFilters({ genre: selectedGenre });
   };
+
+  // ////////////////////////////////////
+  // ////////////////////////////////////
+
+  const fetchMovieDataById = async (id) => {
+    try {
+      const response = await fetch(`https://dashboard.ucqire.com/api/by-id-movie?id=${id}`);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      console.log("Fetched movie data:", data[0]); // Log the fetched data
+      return data[0]; // Return the fetched data
+    } catch (error) {
+      console.error("Error fetching movie data:", error);
+      return null; // Return null if there's an error
+    }
+  };
+
+  const handleClosePlayer = () => {
+    setIsPlaying(false);
+    setVideoUrl("");
+  };
+
+
+  const handlePlay = async (id) => {
+    console.log("handlePlay called with id:", id); // Add this line to debug
+    const data = await fetchMovieDataById(id);
+    if (data && data.url) { // Ensure the movie data has a URL field
+      setVideoUrl(data.url);
+      setIsPlaying(true);
+      console.log("Video URL set:", data.url); // Add this line to debug
+    } else {
+      console.error("Movie URL not found");
+    }
+  };
+
+
 
   return (
     <>
@@ -90,7 +135,6 @@ const CategoryList = () => {
         <div id="next" className="swiper-button swiper-button-next">
           <i className="ri-arrow-right-s-line"></i>
         </div>
-
         <Swiper
           slidesPerView={2}
           spaceBetween={0}
@@ -105,7 +149,13 @@ const CategoryList = () => {
         >
           {movies.map((movie, index) => (
             <SwiperSlide key={index}>
-              <Link to="/movie-details">
+              <div
+              className="mini-carousel"
+                onClick={() => {
+                  console.log("Movie Object:", movie); // Log the movie object
+                  handlePlay(movie.id); // Pass the movie ID
+                }}
+              >
                 <div className="shows-img">
                   <img src={movie.poster} className="w-100 img" alt="" />
                   <div className="shows-content">
@@ -117,10 +167,11 @@ const CategoryList = () => {
                     </div>
                   </div>
                 </div>
-              </Link>
+              </div>
             </SwiperSlide>
           ))}
         </Swiper>
+        aaa
       </section>
       <div className="main-content">
         <GenreFilter onFilterChange={handleFilterChange} />
@@ -143,6 +194,7 @@ const CategoryList = () => {
           )}
         </div>
       </div>
+      {isPlaying && <VideoPlayer url={videoUrl} onClose={handleClosePlayer} />}
     </>
   );
 };

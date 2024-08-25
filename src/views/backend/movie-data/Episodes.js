@@ -15,10 +15,6 @@ const Episodes = ({ episodes }) => {
     }
   }, [episodes]);
 
-  // Debugging: check the type of episodes
-  console.log("Episodes prop type:", typeof episodes);
-  console.log("Episodes prop value:", episodes);
-
   if (!Array.isArray(episodes)) {
     return <p>No episodes available</p>;
   }
