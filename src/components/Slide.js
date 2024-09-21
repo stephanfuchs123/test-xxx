@@ -71,21 +71,21 @@ const Slide = ({ data, next, type }) => {
   }, []);
 
   const handlePlayButtonClick = useCallback(
-    async (id) => {
-      console.log("Play button clicked for movie ID:", id);
+    async (id, type) => {
+      console.log("Play button clicked for ID:", id);
       const data = await fetchMovieDataById(id);
 
-      if (data && data.url && data.type === "movies") {
-        // Navigate to /movie/${id} if the conditions are met
-        history.push(`/movie/${id}`);
-      } else {
-        // Call handleMovieClick if the condition is not met
-        handleMovieClick(data);
-        console.log("This is a series");
-        console.error("Video URL not found for movie ID:", id);
+      if (data) {
+        if (type === "movies" && data.url) {
+          history.push(`/movie/${id}`);
+        } else if (type === "series") {
+          handleMovieClick(data);
+        } else {
+          console.error("Unexpected type or missing URL for ID:", id);
+        }
       }
     },
-    [fetchMovieDataById, handleMovieClick, history] // Added missing dependencies
+    [fetchMovieDataById, handleMovieClick, history]
   );
 
   return (
@@ -100,8 +100,9 @@ const Slide = ({ data, next, type }) => {
         loop={true}
         centeredSlides={true}
         breakpoints={{
-          320: { slidesPerView: 2, spaceBetween: 10 },
+          320: { slidesPerView: 3, spaceBetween: 10 }, // Show 3 slides for mobile screens
           550: { slidesPerView: 4 },
+          768: { slidesPerView: 3 }, // Ensure 3 slides for mobile phones
           991: { slidesPerView: 4 },
           1400: { slidesPerView: 6 },
           1600: { slidesPerView: 7 },
@@ -109,11 +110,7 @@ const Slide = ({ data, next, type }) => {
         className="favorites-slider list-inline row p-0 m-0 iq-rtl-direction"
       >
         {data.map((movie) => (
-          <SwiperSlide
-            key={movie.id}
-            className="slide-item"
-            onClick={() => handleMovieClick(movie)}
-          >
+          <SwiperSlide key={movie.id} className="slide-item">
             <div className="block-images1 block-images position-relative">
               <div className="img-box">
                 <img
@@ -133,7 +130,10 @@ const Slide = ({ data, next, type }) => {
                 <ul className="list-inline p-0 m-0 music-play-lists">
                   <li>
                     <span>
-                      <i className="ri-arrow-down-s-line"></i>
+                      <i
+                        className="ri-arrow-down-s-line"
+                        onClick={() => handleMovieClick(movie)}
+                      ></i>
                     </span>
                   </li>
                 </ul>
