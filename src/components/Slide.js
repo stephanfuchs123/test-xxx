@@ -1,11 +1,16 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
+import { useHistory } from "react-router-dom"; // Import useHistory
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import "./slide.css";
 import MovieData from "../views/backend/movie-data/movie-data";
-import VideoPlayer from "../views/backend/pages/player";
 
 const Slide = ({ data, next, type }) => {
+  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [movieData, setMovieData] = useState(null);
+  const history = useHistory(); // Initialize useHistory for navigation
+  const swiperRef = useRef(null);
+
   const parseStringToArray = (str) => {
     const genres = str
       .slice(1, -1)
@@ -15,66 +20,73 @@ const Slide = ({ data, next, type }) => {
     return genres.slice(0, 3);
   };
 
-  const [selectedMovie, setSelectedMovie] = useState(null);
-  const [movieData, setMovieData] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [videoUrl, setVideoUrl] = useState("");
-  const swiperRef = useRef(null);
-
   useEffect(() => {
     if (swiperRef.current && data.length) {
       const swiperInstance = swiperRef.current.swiper;
       if (swiperInstance) {
-        swiperInstance.slideNext(); // Automatically advance to the next slide
-        // swiperInstance.slideTo(2); // Optionally jump to a specific slide
+        swiperInstance.slideNext();
       }
     }
   }, [data]);
 
-  const fetchMovieDataById = useCallback(async (id) => {
-    try {
-      const response = await fetch(
-        `https://dashboard.ucqire.com/api/by-id-${type}?id=${id}`
-      );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
+  const fetchMovieDataById = useCallback(
+    async (id) => {
+      try {
+        const response = await fetch(
+          `https://dashboard.ucqire.com/api/by-id-${type}?id=${id}`
+        );
+        console.log("type: ", type);
+        console.log("ID: ", id);
+        if (!response.ok) {
+          throw new Error("Failed to fetch movie data");
+        }
+        const data = await response.json();
+        console.log("returned data: ", data[0]);
+        return data[0];
+      } catch (error) {
+        console.error("Error fetching movie data:", error);
+        alert("Unable to load movie data. Please try again later.");
+        return null;
       }
-      const data = await response.json();
-      return data[0];
-    } catch (error) {
-      console.error("Error fetching movie data:", error);
-      return null;
-    }
-  }, [type]);
+    },
+    [type]
+  );
 
-  const handleMovieClick = useCallback(async (movie) => {
-    setSelectedMovie(movie);
-    const data = await fetchMovieDataById(movie.id);
-    if (data) {
-      setMovieData(data);
-    }
-  }, [fetchMovieDataById]);
+  const handleMovieClick = useCallback(
+    async (movie) => {
+      console.log("this is now: ", movie);
+      setSelectedMovie(movie);
+      const data = await fetchMovieDataById(movie.id);
+      if (data) {
+        setMovieData(data);
+      }
+    },
+    [fetchMovieDataById]
+  );
 
   const handleCloseMovieData = useCallback(() => {
     setSelectedMovie(null);
     setMovieData(null);
+    console.log("cleared everything");
   }, []);
 
-  const handlePlayButtonClick = useCallback(async (id) => {
-    const data = await fetchMovieDataById(id);
-    if (data && data.url) {
-      setVideoUrl(data.url);
-      setIsPlaying(true);
-      handleCloseMovieData();
-    } else {
-      console.error("Video URL not found");
-    }
-  }, [fetchMovieDataById, handleCloseMovieData]);
+  const handlePlayButtonClick = useCallback(
+    async (id) => {
+      console.log("Play button clicked for movie ID:", id);
+      const data = await fetchMovieDataById(id);
 
-  const handleClosePlayer = useCallback(() => {
-    setIsPlaying(false);
-    setVideoUrl("");
-  }, []);
+      if (data && data.url && data.type === "movies") {
+        // Navigate to /movie/${id} if the conditions are met
+        history.push(`/movie/${id}`);
+      } else {
+        // Call handleMovieClick if the condition is not met
+        handleMovieClick(data);
+        console.log("This is a series");
+        console.error("Video URL not found for movie ID:", id);
+      }
+    },
+    [fetchMovieDataById, handleMovieClick, history] // Added missing dependencies
+  );
 
   return (
     <>
@@ -104,7 +116,11 @@ const Slide = ({ data, next, type }) => {
           >
             <div className="block-images1 block-images position-relative">
               <div className="img-box">
-                <img src={movie.poster} className="img-fluid" alt={movie.title_eng} />
+                <img
+                  src={movie.poster}
+                  className="img-fluid"
+                  alt={movie.title_eng}
+                />
               </div>
               <div className="block-social-info">
                 <ul className="list-inline p-0 m-0 music-play-lists">
@@ -132,13 +148,16 @@ const Slide = ({ data, next, type }) => {
                 </div>
                 <div className="bottom-meta">
                   <span className="year">{movie.year}</span>
-                  <span className="imdb-badge imdb-slide">IMDB: {movie.imdb}</span>
+                  <span className="imdb-badge imdb-slide">
+                    IMDB: {movie.imdb}
+                  </span>
                 </div>
               </div>
             </div>
           </SwiperSlide>
         ))}
       </Swiper>
+
       {selectedMovie && movieData && (
         <MovieData
           movie={movieData}
@@ -146,7 +165,6 @@ const Slide = ({ data, next, type }) => {
           onPlay={() => handlePlayButtonClick(movieData.id)}
         />
       )}
-      {isPlaying && <VideoPlayer url={videoUrl} onClose={handleClosePlayer} />}
     </>
   );
 };

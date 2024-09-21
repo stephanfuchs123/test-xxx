@@ -14,7 +14,6 @@ const TrendingSection = ({ trendingData }) => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const mainSwiperRef = useRef(null);
-  const thumbsSwiperRef = useRef(null);
 
   useEffect(() => {
     if (mainSwiperRef.current) {

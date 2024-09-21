@@ -8,11 +8,17 @@ const MovieData = ({ movie, onClose, onPlay, url }) => {
   const episodesRef = useRef(null); // Reference to the episodes section
   const [isMuted, setIsMuted] = useState(false);
 
-  const handleClickOutside = useCallback((event) => {
-    if (movieCardRef.current && !movieCardRef.current.contains(event.target)) {
-      onClose();
-    }
-  }, [onClose]); // include all dependencies that can change over time
+  const handleClickOutside = useCallback(
+    (event) => {
+      if (
+        movieCardRef.current &&
+        !movieCardRef.current.contains(event.target)
+      ) {
+        onClose();
+      }
+    },
+    [onClose]
+  ); // include all dependencies that can change over time
 
   const parseStringToArray = (str) => {
     if (!str || typeof str !== "string") {
@@ -40,9 +46,11 @@ const MovieData = ({ movie, onClose, onPlay, url }) => {
   };
 
   const handlePlayClick = () => {
+    console.log("clicked")
     if (movie.type === "tv_series" && episodesRef.current) {
       episodesRef.current.scrollIntoView({ behavior: "smooth" });
     } else {
+      console.log("else with id: ", movie.id)
       onPlay(movie.id); // Use the onPlay function with movie.id
     }
   };
@@ -68,22 +76,29 @@ const MovieData = ({ movie, onClose, onPlay, url }) => {
                 muted={isMuted}
                 onError={(e) => console.error("Video loading error: ", e)}
               />
-              <button className="mute-button" onClick={toggleMute} aria-label={isMuted ? "Unmute" : "Mute"}>
-                <i className={`fas ${isMuted ? "fa-volume-mute" : "fa-volume-up"}`}></i>
+              <button
+                className="mute-button"
+                onClick={toggleMute}
+                aria-label={isMuted ? "Unmute" : "Mute"}
+              >
+                <i
+                  className={`fas ${
+                    isMuted ? "fa-volume-mute" : "fa-volume-up"
+                  }`}
+                ></i>
               </button>
-              
             </>
           ) : (
             <div className="trailer-not-found">Trailer was not found</div>
           )}
           <button
-                onClick={handlePlayClick}
-                className="btn btn-hover iq-button data-play"
-                aria-label="Play"
-              >
-                <i className="fa fa-play mr-2" aria-hidden="true"></i>
-                Play Now
-              </button>
+            onClick={handlePlayClick}
+            className="btn btn-hover iq-button data-play"
+            aria-label="Play"
+          >
+            <i className="fa fa-play mr-2" aria-hidden="true"></i>
+            Play Now
+          </button>
         </div>
         <div className="movie-content">
           <h1 className="movie-title">{movie.title_eng}</h1>
@@ -114,7 +129,7 @@ const MovieData = ({ movie, onClose, onPlay, url }) => {
           </div>
         </div>
 
-        {movie.type === "tv_series" && (
+        {movie.type === "tv_series" && movie && (
           <div className="episodes-section" ref={episodesRef}>
             <Episodes
               episodes={
@@ -122,6 +137,8 @@ const MovieData = ({ movie, onClose, onPlay, url }) => {
                   ? JSON.parse(movie.urls)
                   : movie.urls
               }
+              onPlay={onPlay}
+              data={movie}
             />
           </div>
         )}

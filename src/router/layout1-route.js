@@ -20,8 +20,7 @@ import ShowList from '../views/backend/show/show-list';
 import Homepage from '../views/backend/home/home';
 import Cinema from '../views/backend/cinema/Cinema';
 import Searched from '../views/backend/pages/searched';
-import VideoPlayer from '../components/Video-player';
-
+import Player from '../views/backend/pages/player';
 const Layout1Route = () => {
   let location = useLocation();
 
@@ -49,10 +48,11 @@ const Layout1Route = () => {
           {/* Show */}
           <Route path="/show-details" component={ShowList} />
 
+          <Route path="/movie" component={Player} />
+          <Route path="/tvshow" component={Player} />
+
           {/* Homepage */}
           <Route path="/" exact component={Homepage} />
-          <Route path="/movies" component={VideoPlayer} />
-          <Route path="/tv-series" component={VideoPlayer} />
 
           <Route path="/cinema" component={Cinema} />
         </Switch>

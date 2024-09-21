@@ -171,7 +171,6 @@ const CategoryList = () => {
             </SwiperSlide>
           ))}
         </Swiper>
-        aaa
       </section>
       <div className="main-content">
         <GenreFilter onFilterChange={handleFilterChange} />

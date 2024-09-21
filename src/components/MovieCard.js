@@ -1,10 +1,15 @@
 import React, { useState, useCallback } from "react";
+import { useHistory } from "react-router-dom"; // Import useHistory for navigation
 import MovieData from "../views/backend/movie-data/movie-data";
 import "./movieCard.css";
 import { SwiperSlide } from "swiper/react";
-import VideoPlayer from "../views/backend/pages/player";
 
 const MovieCard = ({ movie, type }) => {
+  const history = useHistory(); // Initialize useHistory for navigation
+  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [movieData, setMovieData] = useState(null);
+
+  // Define parseStringToArray within the component
   const parseStringToArray = (str) => {
     if (!str) return [];
     const genres = str
@@ -14,11 +19,6 @@ const MovieCard = ({ movie, type }) => {
     genres.sort((a, b) => a.length - b.length);
     return genres.slice(0, 3);
   };
-
-  const [selectedMovie, setSelectedMovie] = useState(null);
-  const [movieData, setMovieData] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [videoUrl, setVideoUrl] = useState("");
 
   const fetchMovieDataById = useCallback(
     async (id) => {
@@ -54,30 +54,14 @@ const MovieCard = ({ movie, type }) => {
     [fetchMovieDataById, selectedMovie]
   );
 
-  const handleCloseMovieData = useCallback(() => {
-    setSelectedMovie(null);
-    setMovieData(null);
-    setIsPlaying(false)
-  }, []);
-
   const handlePlayButtonClick = useCallback(
-    async (id) => {
-      const data = await fetchMovieDataById(id);
-      if (data && data.url) {
-        setVideoUrl(data.url);
-        setIsPlaying(true);
-        handleCloseMovieData();
-      } else {
-        console.error("Video URL not found");
-      }
+    (id) => {
+      // Navigate to /movie/id
+      history.push(`/movie/${id}`);
     },
-    [fetchMovieDataById, handleCloseMovieData]
+    [history]
   );
-
-  const handleClosePlayer = useCallback(() => {
-    setIsPlaying(false);
-    setVideoUrl("");
-  }, []);
+  
 
   return (
     <>
@@ -128,11 +112,9 @@ const MovieCard = ({ movie, type }) => {
       {selectedMovie && movieData && (
         <MovieData
           movie={movieData}
-          onClose={handleCloseMovieData}
           onPlay={() => handlePlayButtonClick(movieData.id)}
         />
       )}
-      {isPlaying && <VideoPlayer url={videoUrl} onClose={handleClosePlayer} />}
     </>
   );
 };

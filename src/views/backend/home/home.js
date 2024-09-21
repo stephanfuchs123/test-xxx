@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { gsap } from "gsap";
 import axios from "axios";
+import { useHistory } from "react-router-dom"; // Import useHistory
 
 import { Link } from "react-router-dom";
 import { Container, Col, Row } from "react-bootstrap";
 import FsLightbox from "fslightbox-react";
 import logo from "../../../assets/images/logo.png";
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { EffectFade, Navigation,Thumbs, Pagination } from "swiper";
+import SwiperCore, { EffectFade, Navigation, Thumbs, Pagination } from "swiper";
 import "swiper/swiper-bundle.css";
 
 import Slide from "../../../components/Slide";
 import UpcomingSlide from "../../../components/Upcoming-slide";
 import MovieData from "../movie-data/movie-data";
-import VideoPlayer from "../pages/player";
 import TrendingSection from "./TrendingSlide";
 
 SwiperCore.use([EffectFade, Navigation, Thumbs, Pagination]);
@@ -83,7 +83,6 @@ const gsapAnimate = {
 };
 
 const Homepage = () => {
-
   const [trendingData, setTrendingData] = useState([]);
 
   useEffect(() => {
@@ -103,14 +102,16 @@ const Homepage = () => {
 
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [movieData, setMovieData] = useState(null); // Change to null initially
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [videoUrl, setVideoUrl] = useState("");
   const [toggler, setToggler] = useState(false);
   const [trailerUrl, setTrailerUrl] = useState("");
   const [movies, setMovies] = useState([]);
   const [lastAddedSliderData, setLastAddedSliderData] = useState([]);
-  const [lastAddedSeriesSliderData, setLastAddedSeriesSliderData] = useState([]);
+  const [lastAddedSeriesSliderData, setLastAddedSeriesSliderData] = useState(
+    []
+  );
   const [upcomingMoviesData, setUpcomingMoviesData] = useState([]);
+  const history = useHistory(); // Initialize useHistory inside the component
+
 
   useEffect(() => {
     fetchMovies();
@@ -118,7 +119,9 @@ const Homepage = () => {
 
   const fetchMovies = async () => {
     try {
-      const response = await fetch("https://dashboard.ucqire.com/api/movie-carousel");
+      const response = await fetch(
+        "https://dashboard.ucqire.com/api/movie-carousel"
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }
@@ -134,26 +137,34 @@ const Homepage = () => {
     fetch("https://dashboard.ucqire.com/api/axal_damatebli_serialebi")
       .then((response) => response.json())
       .then((data) => setLastAddedSeriesSliderData(data))
-      .catch((error) => console.error("Error fetching data for series slider:", error));
+      .catch((error) =>
+        console.error("Error fetching data for series slider:", error)
+      );
   }, []);
 
   useEffect(() => {
     fetch("https://dashboard.ucqire.com/api/axal-damatebulebi")
       .then((response) => response.json())
       .then((data) => setLastAddedSliderData(data))
-      .catch((error) => console.error("Error fetching data for movie slider:", error));
+      .catch((error) =>
+        console.error("Error fetching data for movie slider:", error)
+      );
   }, []);
 
   useEffect(() => {
     fetch("https://dashboard.ucqire.com/api/upcoming_movies")
       .then((response) => response.json())
       .then((data) => setUpcomingMoviesData(data))
-      .catch((error) => console.error("Error fetching data for upcoming movies slider:", error));
+      .catch((error) =>
+        console.error("Error fetching data for upcoming movies slider:", error)
+      );
   }, []);
 
   const fetchMovieDataById = async (id) => {
     try {
-      const response = await fetch(`https://dashboard.ucqire.com/api/by-id-movie?id=${id}`);
+      const response = await fetch(
+        `https://dashboard.ucqire.com/api/by-id-movie?id=${id}`
+      );
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -181,25 +192,18 @@ const Homepage = () => {
     setMovieData(null);
   };
 
-  const handlePlay = async (id) => {
-    console.log("handlePlay called with id:", id); // Add this line to debug
-    const data = await fetchMovieDataById(id);
-    if (data && data.url) { // Ensure the movie data has a URL field
-      setVideoUrl(data.url);
-      setIsPlaying(true);
-      console.log("Video URL set:", data.url); // Add this line to debug
-    } else {
-      console.error("Movie URL not found");
-    }
-  };
-
-  const handleClosePlayer = () => {
-    setIsPlaying(false);
-    setVideoUrl("");
-  };
+  const handlePlay = useCallback(
+    (id) => {
+      // Navigate to /movie/id
+      history.push(`/movie/${id}`);
+    },
+    [history]
+  );
 
   const animationInit = () => {
-    if (document.querySelector(".swiper-container .swiper-slide-active") !== null) {
+    if (
+      document.querySelector(".swiper-container .swiper-slide-active") !== null
+    ) {
       const gsapElem = document
         .querySelector(".swiper-container .swiper-slide-active")
         .querySelectorAll('[data-iq-gsap="onStart"]');
@@ -215,7 +219,6 @@ const Homepage = () => {
   };
 
   // trending fetch
-  
 
   return (
     <>
@@ -445,7 +448,11 @@ const Homepage = () => {
                     <i className="fa fa-chevron-right"></i>
                   </div>
                   <div>
-                    <Slide type={"series"} data={lastAddedSeriesSliderData} next={2} />
+                    <Slide
+                      type={"series"}
+                      data={lastAddedSeriesSliderData}
+                      next={2}
+                    />
                   </div>
                 </div>
               </Col>
@@ -467,7 +474,10 @@ const Homepage = () => {
                     <i className="fa fa-chevron-right"></i>
                   </div>
                   <div>
-                    <UpcomingSlide data={upcomingMoviesData} onPlay={handlePlay} />
+                    <UpcomingSlide
+                      data={upcomingMoviesData}
+                      onPlay={handlePlay}
+                    />
                   </div>
                 </div>
               </Col>
@@ -483,8 +493,8 @@ const Homepage = () => {
               <Col sm="12" className="overflow-hidden">
                 {" "}
                  */}
-                <TrendingSection trendingData={trendingData}/>
-              {/* </Col>
+        <TrendingSection trendingData={trendingData} />
+        {/* </Col>
             </Row>
           </Container>
         </section> */}
@@ -497,7 +507,6 @@ const Homepage = () => {
           onPlay={() => handlePlay(selectedMovie.id)} // Pass the ID of the selected movie
         />
       )}
-      {isPlaying && <VideoPlayer url={videoUrl} onClose={handleClosePlayer} />}
     </>
   );
 };
