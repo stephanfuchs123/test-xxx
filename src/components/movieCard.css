@@ -1,0 +1,11 @@
+/* Add this CSS to your styles */
+@media only screen and (max-width: 1400px) {
+  .block-social-infoo,
+  .movie-detailss {
+    display: none !important; /* Hides the elements on mobile devices */
+  }
+}
+
+.swiper-slide:hover .block-images {
+  z-index: 9 !important;
+}

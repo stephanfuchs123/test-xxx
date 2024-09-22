@@ -32,6 +32,7 @@ const CategoryList = () => {
       .then((data) => {
         console.log("Fetched data:", data);
         setFilteredData(data);
+        console.log("asdf",genre)
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -185,6 +186,7 @@ const CategoryList = () => {
                 <Container fluid>
                   <FilteredMovies
                     filteredData={filteredData}
+                    genre={filters.genre}
                     types={"series"}
                   />
                 </Container>

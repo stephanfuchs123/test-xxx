@@ -179,6 +179,7 @@ const CategoryList = () => {
                 <Container fluid>
                   <FilteredMovies
                     filteredData={filteredData}
+                    genre={filters.genre}
                     types={"movies"}
                   />
                 </Container>

@@ -1,101 +1,58 @@
 import React, { useState, useEffect } from "react";
-// import { Link } from "react-router-dom";
 import { Row, Col, Container } from "react-bootstrap";
-// import { Swiper, SwiperSlide } from "swiper/react";
-// import SwiperCore, { Navigation } from "swiper";
+import Slide from "../../../components/Slide";
 import "swiper/swiper-bundle.css";
 
-import Slide from "../../../components/Slide";
+const Sliders = ({ selectedGenre }) => {
+  const [sliderData, setSliderData] = useState({
+    detectivSliderData: [],
+    scarySliderData: [],
+    documentarySliderData: [],
+    criminalSliderData: [],
+    animationSliderData: [],
+    historycSliderData: [],
+    actionSliderData: [],
+    comedySliderData: [],
+    dramaSliderData: [],
+  });
 
-const Sliders = () => {
-  const [detectivSliderData, setDtectivSliderData] = useState([]);
-  const [scarySliderData, setScarySliderData] = useState([]);
-  const [documentarySliderData, setDocumentarySliderData] = useState([]);
-  const [criminalSliderData, setCriminalSliderData] = useState([]);
-  const [animationSliderData, setAnimationSliderData] = useState([]);
-  const [historycSliderData, setHistorycSliderData] = useState([]);
-  const [actionSliderData, setActionSliderData] = useState([]);
-  const [comedySliderData, setComedySliderData] = useState([]);
-  const [dramaSliderData, setDramaSliderData] = useState([]);
+  const [error, setError] = useState("");
 
-  // Fetch data for the sliders
+  // Function to fetch data for both predefined genre and selected genre
+  const fetchData = (predefinedGenre, key) => {
+    // If there's a selected genre, combine it with the predefined genre
+    const genreParam = selectedGenre ? `${selectedGenre},${predefinedGenre}` : predefinedGenre;
+
+    fetch(`https://dashboard.ucqire.com/api/filter-movies?janri=${genreParam}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setSliderData((prevState) => ({
+          ...prevState,
+          [key]: data,
+        }));
+      })
+      .catch((error) => {
+        console.error(`Error fetching data for ${key}:`, error);
+        setError(`Failed to load ${key}`);
+      });
+  };
+
   useEffect(() => {
-    fetch(
-      "https://dashboard.ucqire.com/api/filter-movies?janri=%E1%83%93%E1%83%94%E1%83%A2%E1%83%94%E1%83%A5%E1%83%A2%E1%83%98%E1%83%95%E1%83%98" // detective
-    )
-      .then((response) => response.json())
-      .then((data) => setDtectivSliderData(data))
-      .catch((error) =>
-        console.error("Error fetching data for first slider:", error)
-      );
+    // Fetch data for each slider, combining selectedGenre with the predefined genre
+    fetchData("დეტექტივი", "detectivSliderData");
+    fetchData("საშინელებათა", "scarySliderData");
+    fetchData("დოკუმენტური", "documentarySliderData");
+    fetchData("კრიმინალური", "criminalSliderData");
+    fetchData("ანიმაციური", "animationSliderData");
+    fetchData("ისტორიული", "historycSliderData");
+    fetchData("მძაფრ სიუჟეტიანი", "actionSliderData");
+    fetchData("კომედია", "comedySliderData");
+    fetchData("დრამა", "dramaSliderData");
+  }, [selectedGenre]);  // Refetch when selectedGenre changes
 
-    fetch(
-      "https://dashboard.ucqire.com/api/filter-movies?janri=%E1%83%A1%E1%83%90%E1%83%A8%E1%83%98%E1%83%9C%E1%83%94%E1%83%9A%E1%83%94%E1%83%91%E1%83%90%E1%83%97%E1%83%90" // scary
-    )
-      .then((response) => response.json())
-      .then((data) => setScarySliderData(data))
-      .catch((error) =>
-        console.error("Error fetching data for first slider:", error)
-      );
-
-    fetch(
-      "https://dashboard.ucqire.com/api/filter-movies?janri=%E1%83%93%E1%83%9D%E1%83%99%E1%83%A3%E1%83%9B%E1%83%94%E1%83%9C%E1%83%A2%E1%83%A3%E1%83%A0%E1%83%98" // documentary
-    )
-      .then((response) => response.json())
-      .then((data) => setDocumentarySliderData(data))
-      .catch((error) =>
-        console.error("Error fetching data for first slider:", error)
-      );
-    fetch(
-      "https://dashboard.ucqire.com/api/filter-movies?janri=%E1%83%99%E1%83%A0%E1%83%98%E1%83%9B%E1%83%98%E1%83%9C%E1%83%90%E1%83%9A%E1%83%A3%E1%83%A0%E1%83%98" // criminal
-    )
-      .then((response) => response.json())
-      .then((data) => setCriminalSliderData(data))
-      .catch((error) =>
-        console.error("Error fetching data for first slider:", error)
-      );
-    fetch(
-      "https://dashboard.ucqire.com/api/filter-movies?janri=%E1%83%90%E1%83%9C%E1%83%98%E1%83%9B%E1%83%90%E1%83%AA%E1%83%98%E1%83%A3%E1%83%A0%E1%83%98" // animation
-    )
-      .then((response) => response.json())
-      .then((data) => setAnimationSliderData(data))
-      .catch((error) =>
-        console.error("Error fetching data for first slider:", error)
-      );
-    fetch(
-      "https://dashboard.ucqire.com/api/filter-movies?janri=%E1%83%98%E1%83%A1%E1%83%A2%E1%83%9D%E1%83%A0%E1%83%98%E1%83%A3%E1%83%9A%E1%83%98" // historyc
-    )
-      .then((response) => response.json())
-      .then((data) => setHistorycSliderData(data))
-      .catch((error) =>
-        console.error("Error fetching data for first slider:", error)
-      );
-    fetch(
-      "https://dashboard.ucqire.com/api/filter-movies?janri=%E1%83%9B%E1%83%AB%E1%83%90%E1%83%A4%E1%83%A0%E1%83%A1%E1%83%98%E1%83%A3%E1%83%9F%E1%83%94%E1%83%A2%E1%83%98%E1%83%90%E1%83%9C%E1%83%98" // action
-    )
-      .then((response) => response.json())
-      .then((data) => setActionSliderData(data))
-      .catch((error) =>
-        console.error("Error fetching data for first slider:", error)
-      );
-    fetch(
-      "https://dashboard.ucqire.com/api/filter-movies?janri=%E1%83%99%E1%83%9D%E1%83%9B%E1%83%94%E1%83%93%E1%83%98%E1%83%90" // comedy
-    )
-      .then((response) => response.json())
-      .then((data) => setComedySliderData(data))
-      .catch((error) =>
-        console.error("Error fetching data for first slider:", error)
-      );
-
-    fetch(
-      "https://dashboard.ucqire.com/api/filter-movies?janri=%E1%83%93%E1%83%A0%E1%83%90%E1%83%9B%E1%83%90" // drama
-    )
-      .then((response) => response.json())
-      .then((data) => setDramaSliderData(data))
-      .catch((error) =>
-        console.error("Error fetching data for second slider:", error)
-      );
-  }, []);
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <>
@@ -115,7 +72,7 @@ const Sliders = () => {
                 </div>
 
                 <div>
-                  <Slide type={"movie"} data={comedySliderData}  next={1} />
+                  <Slide type={"movie"} data={sliderData.comedySliderData} next={1} />
                 </div>
               </div>
             </Col>
@@ -139,7 +96,7 @@ const Sliders = () => {
                 </div>
 
                 <div>
-                  <Slide type={"movie"} data={animationSliderData} next={2} />
+                  <Slide type={"movie"} data={sliderData.animationSliderData} next={2} />
                 </div>
               </div>
             </Col>
@@ -163,7 +120,7 @@ const Sliders = () => {
                 </div>
 
                 <div>
-                  <Slide type={"movie"} data={scarySliderData} next={3} />
+                  <Slide type={"movie"} data={sliderData.scarySliderData} next={3} />
                 </div>
               </div>
             </Col>
@@ -187,7 +144,7 @@ const Sliders = () => {
                 </div>
 
                 <div>
-                  <Slide type={"movie"} data={documentarySliderData} next={4} />
+                  <Slide type={"movie"} data={sliderData.documentarySliderData} next={4} />
                 </div>
               </div>
             </Col>
@@ -211,7 +168,7 @@ const Sliders = () => {
                 </div>
 
                 <div>
-                  <Slide type={"movie"} data={criminalSliderData} next={5} />
+                  <Slide type={"movie"} data={sliderData.criminalSliderData} next={5} />
                 </div>
               </div>
             </Col>
@@ -235,7 +192,7 @@ const Sliders = () => {
                 </div>
 
                 <div>
-                  <Slide type={"movie"} data={historycSliderData} next={6} />
+                  <Slide type={"movie"} data={sliderData.historycSliderData} next={6} />
                 </div>
               </div>
             </Col>
@@ -259,7 +216,7 @@ const Sliders = () => {
                 </div>
 
                 <div>
-                  <Slide type={"movie"} data={dramaSliderData} next={7} />
+                  <Slide type={"movie"} data={sliderData.dramaSliderData} next={7} />
                 </div>
               </div>
             </Col>
@@ -283,7 +240,7 @@ const Sliders = () => {
                 </div>
 
                 <div>
-                  <Slide type={"movie"} data={detectivSliderData} next={8} />
+                  <Slide type={"movie"} data={sliderData.detectivSliderData} next={8} />
                 </div>
               </div>
             </Col>
@@ -307,7 +264,7 @@ const Sliders = () => {
                 </div>
 
                 <div>
-                  <Slide type={"movie"} data={actionSliderData} next={9} />
+                  <Slide type={"movie"} data={sliderData.actionSliderData} next={9} />
                 </div>
               </div>
             </Col>

@@ -2,6 +2,7 @@ import React, { useState, useCallback } from "react";
 import { useHistory } from "react-router-dom"; // Import useHistory for navigation
 import MovieData from "../views/backend/movie-data/movie-data";
 import "./movieCard.css";
+// import "./slide.css";
 import { SwiperSlide } from "swiper/react";
 
 const MovieCard = ({ movie, type }) => {
@@ -24,7 +25,7 @@ const MovieCard = ({ movie, type }) => {
     async (id) => {
       let isMounted = true;
       try {
-        const adjustedType = type === "movies" ? "movie" : "series";
+        const adjustedType = type === "movie" ? "movie" : "series";
         const response = await fetch(
           `https://dashboard.ucqire.com/api/by-id-${adjustedType}?id=${id}`
         );
@@ -42,8 +43,16 @@ const MovieCard = ({ movie, type }) => {
     [type]
   );
 
+  const handleCloseMovieData = useCallback(() => {
+    setSelectedMovie(null);
+    setMovieData(null);
+    console.log("cleared everything");
+  }, []);
+
   const handleMovieClick = useCallback(
     async (movie) => {
+    console.log("clicked")
+    console.log("movie", movie)
       if (selectedMovie?.id === movie.id) return;
       setSelectedMovie(movie);
       const data = await fetchMovieDataById(movie.id);
@@ -78,7 +87,7 @@ const MovieCard = ({ movie, type }) => {
               alt={movie.title_eng || "Movie Poster"}
             />
           </div>
-          <div className="block-social-info">
+          <div className="block-social-infoo">
             <ul className="list-inline p-0 m-0 music-play-lists">
               <li>
                 <span onClick={() => handlePlayButtonClick(movie.id)}>
@@ -94,7 +103,7 @@ const MovieCard = ({ movie, type }) => {
               </li>
             </ul>
           </div>
-          <div className="movie-details">
+          <div className="movie-detailss">
             <div className="movie-meta">
               <div className="text-primary title genres">
                 <span className="text-body">
@@ -113,6 +122,7 @@ const MovieCard = ({ movie, type }) => {
         <MovieData
           movie={movieData}
           onPlay={() => handlePlayButtonClick(movieData.id)}
+          onClose={handleCloseMovieData}
         />
       )}
     </>
