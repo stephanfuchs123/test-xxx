@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Container, Row, Col, Nav, Tab } from "react-bootstrap";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Link } from "react-router-dom";
 import "swiper/swiper-bundle.css";
 import MovieData from "../movie-data/movie-data";
 import VideoPlayer from "../pages/player";
@@ -16,13 +15,13 @@ const TrendingSection = ({ trendingData }) => {
   const mainSwiperRef = useRef(null);
 
   useEffect(() => {
-    if (mainSwiperRef.current) {
+    if (mainSwiperRef.current && trendingData.length > 0) {
       const swiperInstance = mainSwiperRef.current.swiper;
       if (swiperInstance) {
         swiperInstance.slideNext(); // Automatically advance to the next slide
       }
     }
-  }, [trendingData]);
+  }, []); // Only run on mount
 
   const handleClosePlayer = () => {
     setIsPlaying(false);
@@ -121,7 +120,10 @@ const TrendingSection = ({ trendingData }) => {
               >
                 {trendingData.map((item, index) => (
                   <SwiperSlide key={index} as="li">
-                    <Link to="#">
+                    <button
+                      onClick={() => handleMovieClick(item)}
+                      className="movie-slick-btn"
+                    >
                       <div className="movie-slick position-relative">
                         <img
                           src={item.poster}
@@ -129,7 +131,7 @@ const TrendingSection = ({ trendingData }) => {
                           alt={item.title_eng}
                         />
                       </div>
-                    </Link>
+                    </button>
                   </SwiperSlide>
                 ))}
               </Swiper>
@@ -165,7 +167,7 @@ const TrendingSection = ({ trendingData }) => {
                           >
                             <Nav.Item as="li" className="nav-item">
                               <Nav.Link
-                                href=""
+                                as="button"
                                 eventKey={`trending-data${index}`}
                               >
                                 Overview
@@ -179,17 +181,15 @@ const TrendingSection = ({ trendingData }) => {
                             className="overlay-tab show fade"
                           >
                             <div className="trending-info align-items-center w-100 animated fadeInUp iq-ltr-direction">
-                              <Link to="#" tabIndex="0">
-                                <div className="res-logo">
-                                  <div className="channel-logo">
-                                    <img
-                                      src={item.logo}
-                                      className="c-logo"
-                                      alt="streamit"
-                                    />
-                                  </div>
+                              <div className="res-logo">
+                                <div className="channel-logo">
+                                  <img
+                                    src={item.logo}
+                                    className="c-logo"
+                                    alt="streamit"
+                                  />
                                 </div>
-                              </Link>
+                              </div>
                               <h1 className="trending-text big-title text-uppercase">
                                 {item.title_eng}
                               </h1>
@@ -202,13 +202,11 @@ const TrendingSection = ({ trendingData }) => {
                                 </span>
                               </div>
                               <div className="d-flex align-items-center series mb-4">
-                                <Link to="#">
-                                  <img
-                                    src={item.label}
-                                    className="img-fluid"
-                                    alt=""
-                                  />
-                                </Link>
+                                <img
+                                  src={item.label}
+                                  className="img-fluid"
+                                  alt=""
+                                />
                                 <span className="text-gold ml-3">
                                   {item.rank}
                                 </span>
